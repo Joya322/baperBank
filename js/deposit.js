@@ -2,25 +2,36 @@
 document.getElementById("btn-deposit").addEventListener("click", function () {
   //step-2:get the deposit amount from the deposit input field
   const newDepositAmountFeild = document.getElementById("deposit-amount");
-  const newDepositAmount = newDepositAmountFeild.value;
+  const newDepositAmountString = newDepositAmountFeild.value;
+  const newDepositAmount = parseFloat(newDepositAmountString);
 
-  //step-3: get the previous deposit amount
+  //step-3: clear the newDepositAmountFeild
+  newDepositAmountFeild.value = "";
+
+  if (isNaN(newDepositAmount)) {
+    alert("Please provide a valid amount");
+    return;
+  }
+
+  //step-4: get the previous deposit amount
   const previousDepositAmountElement =
     document.getElementById("previous-deposit");
-  const previousDepositAmount = previousDepositAmountElement.innerText;
+  const previousDepositAmountString = previousDepositAmountElement.innerText;
 
-  //step-4: calculate current total deposit amount
+  const previousDepositAmount = parseFloat(previousDepositAmountString);
+
+  //step-5: calculate current total deposit amount
   const currentTotalDeposit =
-    parseFloat(previousDepositAmount) + parseFloat(newDepositAmount);
+    previousDepositAmount + newDepositAmount;
   previousDepositAmountElement.innerText = currentTotalDeposit;
 
-  //step-5:get previous balance
-    const previousBalanceField = document.getElementById("previous-balance");
+  //step-6:get previous balance
+  const previousBalanceElement = document.getElementById("previous-balance");
 
-    const previousBalance = previousBalanceField.innerText;
-    const curreTotalBalance = parseFloat(previousBalance) + parseFloat(newDepositAmount);
+  const previousBalance = previousBalanceElement.innerText;
+  const curreTotalBalance =
+    parseFloat(previousBalance) + parseFloat(newDepositAmount);
 
-    previousBalanceField.innerText = curreTotalBalance;
-  //step-5: clear the depositAmountFeild
-  newDepositAmountFeild.value = "";
+  //step-7:set currentTotalBalance into previousBalanceElement
+  previousBalanceElement.innerText = curreTotalBalance;
 });
